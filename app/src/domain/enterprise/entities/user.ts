@@ -53,8 +53,8 @@ export class User extends Entity<UserProps> {
 
   static create(props : Optional<UserProps, 'createdAt' | 'updatedAt'>, id? : UniqueEntityID) {
     const user = new User({
-      createdAt : props.createdAt ?? new Date(), 
       ...props,
+      createdAt : props.createdAt ?? new Date()
     } , id)
 
     return user

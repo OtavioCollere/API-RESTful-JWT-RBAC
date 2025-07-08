@@ -2,5 +2,11 @@
 	"devDependencies": {
 		"@tsconfig/node22": "^22.0.2",
 		"@types/node": "^24.0.10"
+	},
+	"dependencies": {
+		"@types/jsonwebtoken": "9.0.6",
+		"bcrypt": "^6.0.0",
+		"bcryptjs": "^3.0.2",
+		"jsonwebtoken": "9.0.2"
 	}
 }

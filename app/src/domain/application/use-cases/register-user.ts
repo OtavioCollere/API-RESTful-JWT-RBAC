@@ -1,6 +1,8 @@
-import { makeLeft, type Either } from "@/core/types/either";
-import type { User } from "@/domain/enterprise/entities/user";
+import { makeLeft, makeRight, type Either } from "@/core/types/either";
+import { User } from "@/domain/enterprise/entities/user";
 import type { UsersRepository } from "../repositories/users-repository";
+import { EmailAlreadyExistsError } from "@/core/error/errors/email-already-exists-error";
+import type { HashGenerator } from "../cryptography/hash-generator";
 
 interface RegisterUserUseCaseRequest{
   name : string
@@ -9,7 +11,7 @@ interface RegisterUserUseCaseRequest{
 }
 
 type RegisterUserUseCaseResponse = Either<
-null, 
+EmailAlreadyExistsError, 
 {
   user : User
 }
@@ -18,7 +20,8 @@ null,
 export class RegisterUserUseCase{
 
   constructor(
-    private usersRepository : UsersRepository
+    private usersRepository : UsersRepository,
+    private hashGenerator : HashGenerator
   ) {}
 
   async execute( { name, email, password } : RegisterUserUseCaseRequest ) : Promise<RegisterUserUseCaseResponse> {
@@ -27,9 +30,22 @@ export class RegisterUserUseCase{
 
     if ( emailExists ) 
     {
-      return makeLeft(new )
+      return makeLeft(new EmailAlreadyExistsError())
     }
 
+    const hashedPassword = await this.hashGenerator.hash(password);
+
+    const user = User.create({
+      name, 
+      email,
+      password : hashedPassword
+    })
+
+    await this.usersRepository.create(user)
+
+    return makeRight({
+      user
+    })
 
   }
 
