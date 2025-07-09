@@ -8,9 +8,9 @@ API RESTful with JWT &amp; RBAC
 - RBAC
 
 - Documentacao
+  - auth jwt sem passport
   - tsconfig
   - vitest
-  - auth jwt sem passport
   - docker
   - postgresq
   - zod
