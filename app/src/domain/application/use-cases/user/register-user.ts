@@ -1,8 +1,8 @@
 import { makeLeft, makeRight, type Either } from "@/core/types/either";
 import { User } from "@/domain/enterprise/entities/user";
-import type { UsersRepository } from "../repositories/users-repository";
+import type { UsersRepository } from "../../repositories/users-repository";
 import { EmailAlreadyExistsError } from "@/core/error/errors/email-already-exists-error";
-import type { HashGenerator } from "../cryptography/hash-generator";
+import type { HashGenerator } from "../../cryptography/hash-generator";
 
 interface RegisterUserUseCaseRequest{
   name : string

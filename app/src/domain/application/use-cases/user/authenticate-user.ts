@@ -1,8 +1,8 @@
 import { Either, makeLeft } from "@/core/types/either";
-import type { UsersRepository } from "../repositories/users-repository";
+import type { UsersRepository } from "../../repositories/users-repository";
 import type { User } from "@/domain/enterprise/entities/user";
 import { InvalidCredentialsError } from "@/core/error/errors/invalid-credentials-error";
-import type { HashComparer } from "../cryptography/hash-comparer";
+import type { HashComparer } from "../../cryptography/hash-comparer";
 
 
 interface AuthenticateUserUseCaseRequest {
