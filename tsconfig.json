@@ -3,7 +3,8 @@
     "baseUrl": "./app",
     "paths": {
       "@/*" : ["src/*"]
-    }
+    },
+    "typeRoots": ["./types"] // isso sozinho ignora os types de node_modules!
   },
   "extends": "@tsconfig/node22/tsconfig.json",
 }

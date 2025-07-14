@@ -1,0 +1,15 @@
+version : '3.8'
+
+services : 
+  postgres:
+    container_name : app-users-pg
+    image : bitnami/postgres
+    ports : 
+      - 5432:5432
+    environment:
+      POSTGRES_USER : postgres
+      POSTGRES_DATABASE : docker
+      POSTGRES_DB : app-users
+      PG_DATA : /data/postgres
+    volumes : 
+      - './data/pg:/data/postgres'

@@ -48,3 +48,15 @@
         }
       },
 ```
+
+🔐 Resumo das funções
+PassportModule
+Responsável por aplicar estratégias de autenticação (como JWT, Local, OAuth).
+Por si só, ele não autentica — apenas orquestra a lógica de validação definida em estratégias como JwtStrategy.
+Usado junto com @UseGuards(AuthGuard('jwt')) para proteger rotas.
+
+JwtModule
+Fornece métodos para criar (sign) e verificar (verify) tokens JWT.
+No caso de RS256, exige configuração com chaves pública e privada.
+Serve de base para JwtStrategy validar os tokens recebidos nas requisições.
+
