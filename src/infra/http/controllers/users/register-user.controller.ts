@@ -1,8 +1,8 @@
 
-import { Body, Controller, Post, UsePipes } from '@nestjs/common'
-import { JwtService } from '@nestjs/jwt'
+import { Controller, Post, UsePipes } from '@nestjs/common'
 import z from 'zod'
 import { ZodValidationPipe } from '../../pipes/zod-validation-pipe'
+import type { PrismaService } from '../../../../prisma/prisma.service'
 
 const registerUserBodySchema = z.object({
   name : z.string(),
@@ -23,7 +23,7 @@ export class RegisterUserController {
   async handle(@Body() body : RegisterUserBodySchema) {
     const {name, email, password} = body;
 
-    const emailExists = await 
+    const emailExists = await this.prisma.
     
   }
 }
