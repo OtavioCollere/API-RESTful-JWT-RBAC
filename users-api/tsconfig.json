@@ -1,10 +1,17 @@
 {
-  "compilerOptions": { 
+  "compilerOptions": {
     "baseUrl": "./app",
     "paths": {
-      "@/*" : ["src/*"]
+      "@/*": [
+        "src/*"
+      ]
     },
-    "typeRoots": ["./types"] // isso sozinho ignora os types de node_modules!
+    "typeRoots": [
+      "./types"
+    ],
+    "outDir": "./dist",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "extends": "@tsconfig/node22/tsconfig.json",
 }

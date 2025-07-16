@@ -35,11 +35,11 @@
 ```
    JwtModule.registerAsync({
       imports: [EnvModule],
-      inject: [EnvService],
+      inject: [ConfigService],
       global: true,
-      useFactory(env: EnvService) {
-        const privateKey = env.get('JWT_PRIVATE_KEY')
-        const publicKey = env.get('JWT_PUBLIC_KEY')
+      useFactory(config : ConfigService<Env, true>) {
+        const privateKey = config.get('JWT_PRIVATE_KEY', {infer : true})
+        const publicKey = config.get('JWT_PUBLIC_KEY', {infer : true})
 
         return {
           signOptions: { algorithm: 'RS256' },
