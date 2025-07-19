@@ -16,12 +16,14 @@ Este repositório tem como objetivo **aprofundar o entendimento prático e conce
 
 ## Funcionalidades previstas
 
-- [x] CRUD de usuários
+- [] CRUD de usuários
 - [x] Registro de novos usuários
 - [x] Autenticação com JWT
 - [x] Autorização com RBAC
 - [ ] Testes automatizados (Vitest)
 - [ ] Documentação completa no diretório `docs/`
+- [ ] Cache com Redis
+- [ ] Integração Google Agenda e Google DRIVE
 
 ## Tecnologias
 
