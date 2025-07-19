@@ -1,31 +1,39 @@
-import { Module } from "@nestjs/common";
-import type { ConfigService } from "@nestjs/config";
-import { PassportStrategy } from "@nestjs/passport";
-import type { Env } from "../../env/env";
-import { ExtractJwt, Strategy } from 'passport-jwt'
+import { Injectable } from "@nestjs/common";
+import { PassportStrategy } from '@nestjs/passport';
+import { ExtractJwt, Strategy } from "passport-jwt";
 import z from "zod";
+import type { Env } from "../../env/env";
+import type { ConfigService } from "@nestjs/config";
 
-const tokenSchema = z.object({
-  sub: z.string().uuid()
-}) 
+const tokenPayloadSchema = z.object({
+  sub : z.string().uuid()
+})
 
-type TokenSchema = z.infer<typeof tokenSchema>
+export type UserPayload = z.infer<typeof tokenPayloadSchema>
 
-@Module({})
-export class JwtStrategy extends PassportStrategy(Strategy) {
 
-  constructor(config : ConfigService<Env, true>) {
-    const publicKey = config.get('PUBLIC_KEY', {infer : true})
+// Essa classe é o "Segurança da aplicação", ele que vai validar se o token JWT é valido
+@Injectable()
+export class JwtStrategy extends PassportStrategy(Strategy){
+
+  constructor(config : ConfigService<Env, true>){
+
+    const publicKey = config.get('PUBLIC_KEY', {infer: true});
 
     super({
-      algorithms:  ['RS256'],
+      // De onde vou pegar meu token?
       jwtFromRequest : ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey : Buffer.from(publicKey, 'base64')
+
+      // Chave que vou validar
+      secretOrKey : Buffer.from(publicKey, 'base64'),
+
+      // Estrategia
+      algorithms: ['RS256']
     })
   }
-
-  validate(payload : TokenSchema){
-    return tokenSchema.parse(payload);
+  
+  validate(payload : UserPayload)  {
+    return tokenPayloadSchema.parse(payload)
   }
   
 }
