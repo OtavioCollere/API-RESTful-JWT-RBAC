@@ -8,7 +8,7 @@ Este repositório tem como objetivo **aprofundar o entendimento prático e conce
 
 ## Objetivos do projeto
 
-- Implementar autenticação via JWT (com e sem Passport)
+- Implementar autenticação via JWT 
 - Criar fluxo completo de registro e login de usuários
 - Aplicar RBAC (Role-Based Access Control) na autorização de rotas
 - Estruturar o código com **entidades, casos de uso e módulos isolados**
