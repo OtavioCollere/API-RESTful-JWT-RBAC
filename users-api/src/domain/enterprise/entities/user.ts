@@ -12,7 +12,7 @@ interface UserProps{
 
 export class User extends Entity<UserProps>{
 
-  static create(props : Optional<UserProps, 'createdAt' | 'updatedAt'> , id?: string) {
+  public static create(props : Optional<UserProps, 'createdAt' | 'updatedAt'> , id?: string) {
 
     const user = new User({
       ...props,
@@ -20,7 +20,6 @@ export class User extends Entity<UserProps>{
     }, new UniqueEntityID(id));
 
     return user;
-    
   }
 
   // Getters
