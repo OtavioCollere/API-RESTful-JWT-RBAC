@@ -1,9 +1,9 @@
-import { makeLeft, makeRight, type Either } from "../../../core/either/either";
+import { makeLeft, makeRight, type Either } from "../../../../core/either/either";
 import { Injectable } from "@nestjs/common";
-import { EmailAlreadyExistsError } from "../../../core/errors/email-already-exists-error";
-import type { UsersRepository } from "../repositories/users-repository";
-import type { HashGenerator } from "../cryptograph/hash-generator";
-import { User } from "../../enterprise/entities/user";
+import { EmailAlreadyExistsError } from "../../../../core/errors/email-already-exists-error";
+import type { UsersRepository } from "../../repositories/users-repository";
+import type { HashGenerator } from "../../cryptograph/hash-generator";
+import { User } from "../../../enterprise/entities/user";
 
 
 interface RegisterUserUseCaseRequest {
@@ -27,7 +27,7 @@ export class RegisterUserUseCase{
     private hashGenerator : HashGenerator
   ) {}
   
-  async handle({name, email, password}: RegisterUserUseCaseRequest) : Promise<RegisterUserUseCaseResponse> {
+  async execute({name, email, password}: RegisterUserUseCaseRequest) : Promise<RegisterUserUseCaseResponse> {
 
     const emailExists = await this.usersRepository.findByEmail(email)
 

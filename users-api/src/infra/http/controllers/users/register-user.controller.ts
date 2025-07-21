@@ -1,8 +1,9 @@
-import { Post, HttpCode, Body, Controller, UsePipes, ConflictException } from '@nestjs/common';
+import { Post, HttpCode, Body, Controller, UsePipes, ConflictException, BadRequestException } from '@nestjs/common';
 import z from "zod";
 import { ZodValidationPipe } from "../../pipes/zod-validation-pipe";
-import type { PrismaService } from "../../../database/prisma/prisma.service";
-import { hash } from "bcryptjs";
+import type { RegisterUserUseCase } from '../../../../domain/application/use-cases/users/register-user';
+import { isLeft, unwrapEither } from '../../../../core/either/either';
+import { EmailAlreadyExistsError } from '../../../../core/errors/email-already-exists-error';
 
 
 const registerUserBodySchema = z.object({
@@ -17,7 +18,7 @@ type RegisterUserBodySchema = z.infer<typeof registerUserBodySchema>
 export class RegisterUserController{
 
   constructor(
-    private prismaService : PrismaService
+    private registerUser : RegisterUserUseCase
   ) {}
 
   @Post()
@@ -26,23 +27,28 @@ export class RegisterUserController{
   async handle(@Body() body : RegisterUserBodySchema) {
     const {name, email, password} = body;
 
-    const emailExists = await this.prismaService.users.findUnique({
-      where: {
-        email,
-      },
-    });
-    
-    if(emailExists) {
-      throw new ConflictException("Email already exists.")
+    const result = await this.registerUser.execute({
+      name, email, password
+    })
+
+    if(isLeft(result))
+    {
+      const error = unwrapEither(result)
+
+      switch (error.constructor)
+      {
+        case EmailAlreadyExistsError:
+          throw new ConflictException()
+        default : 
+          throw new BadRequestException()
+      }
     }
 
-    const hashedPassword = await hash(password, 6)
+    const user = unwrapEither(result).user
 
-    await this.prismaService.create({
-      name,
-      email,
-      password : hashedPassword
-    })
+    return{
+      user
+    }
 
   }
 }

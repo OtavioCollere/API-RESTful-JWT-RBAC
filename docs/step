@@ -1,15 +1,11 @@
 // Criar users
 
-// Criar repositorio users
+// fazer crud products
 
-// Criar casos de uso de usuarios
+// testes products
 
-// criar decorator de authenticacao
-
-// criar repositorios de criptografia
-
-// criar stubs de criptografia
-
-// implementar criptografia
+// fazer testes unitarios de auth
 
 // configurar banco de testes isolados
+
+// documentar

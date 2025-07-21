@@ -4,9 +4,9 @@ import { DatabaseModule } from "../database/database.module";
 import { CryptographModule } from "../cryptography/cryptography.module";
 import { RefreshTokenController } from "./controllers/users/refresh-token.controller";
 import { AuthenticateController } from "./controllers/users/authenticate.controller";
-import { RefreshTokenUseCase } from "../../domain/application/use-cases/refresh-token";
-import { AuthenticateUseCase } from "../../domain/application/use-cases/authenticate";
-import { RegisterUserUseCase } from "../../domain/application/use-cases/register-user";
+import { RefreshTokenUseCase } from "../../domain/application/use-cases/users/refresh-token";
+import { AuthenticateUseCase } from "../../domain/application/use-cases/users/authenticate";
+import { RegisterUserUseCase } from "../../domain/application/use-cases/users/register-user";
 
 
 @Module({

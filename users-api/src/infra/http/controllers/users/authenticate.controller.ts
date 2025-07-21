@@ -1,9 +1,9 @@
-import { Post, HttpCode, Body, Controller, UsePipes, ConflictException, UnauthorizedException } from '@nestjs/common';
+import { Post, HttpCode, Body, Controller, UsePipes, UnauthorizedException, BadRequestException } from '@nestjs/common';
 import z from "zod";
 import { ZodValidationPipe } from "../../pipes/zod-validation-pipe";
-import type { PrismaService } from "../../../database/prisma/prisma.service";
-import { compare, hash } from "bcryptjs";
-import type { JwtService } from '@nestjs/jwt';
+import type { AuthenticateUseCase } from '../../../../domain/application/use-cases/users/authenticate';
+import { isLeft, unwrapEither } from '../../../../core/either/either';
+import { WrongCredentialsError } from '../../../../core/errors/wrong-credentials-error';
 
 
 const registerUserBodySchema = z.object({
@@ -17,8 +17,7 @@ type RegisterUserBodySchema = z.infer<typeof registerUserBodySchema>
 export class AuthenticateController{
 
   constructor(
-    private prismaService : PrismaService,
-    private jwt : JwtService
+    private authenticate : AuthenticateUseCase,
   ) {}
 
   @Post()
@@ -27,28 +26,29 @@ export class AuthenticateController{
   async handle(@Body() body : RegisterUserBodySchema) {
     const {email, password} = body;
 
-    const user = await this.prismaService.users.findUnique({
-      where: {
-        email,
-      },
-    });
-    
-    if(!user) {
-      throw new UnauthorizedException("User credentials does not match.")
-    }
-
-    const isPasswordValid = await compare(password, user.password)
-
-    if(!isPasswordValid) {
-      throw new UnauthorizedException("User credentials does not match.")
-    }
-
-    const acessToken = this.jwt.sign({
-      sub: user.id
+    const result = await this.authenticate.execute({
+      email, password
     })
 
+    if(isLeft(result))
+    {
+      const error = unwrapEither(result)
+
+      switch (error.constructor)
+      {
+        case WrongCredentialsError:
+          throw new UnauthorizedException()
+        default : 
+          throw new BadRequestException()
+      }
+    }
+
+    const access_token = unwrapEither(result).accessToken;
+    const refresh_token = unwrapEither(result).refreshToken;
+
     return {
-      acess_token : acessToken
+      access_token,
+      refresh_token
     }
   }
 }
