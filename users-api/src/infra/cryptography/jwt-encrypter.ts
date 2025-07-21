@@ -1,13 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import type { Encrypter } from "../../domain/application/cryptograph/encrypter";
 import { JwtService } from "@nestjs/jwt";
-import type { UsersRepository } from "../../domain/application/repositories/users-repository";
 
 @Injectable()
 export class JwtEncrypter implements Encrypter{
     constructor(
       private jwtService : JwtService,
-      private usersRepository : UsersRepository
     ) {}
 
     async generateToken(payload: Record<string, unknown>): Promise<{ access_token: string; refresh_token: string; }> {
@@ -39,8 +37,8 @@ export class JwtEncrypter implements Encrypter{
     }
   }
 
-  decode(token: string): Record<string, unknown> | null {
-    return this.jwtService.decode(token) as Record<string, unknown> | null;
+  decode<T extends object = Record<string, unknown>>(token: string): T | null {
+    return this.jwtService.decode(token) as T | null;
   }
-
+  
 }

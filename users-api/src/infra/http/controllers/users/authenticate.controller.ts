@@ -13,7 +13,7 @@ const registerUserBodySchema = z.object({
 
 type RegisterUserBodySchema = z.infer<typeof registerUserBodySchema>
 
-@Controller('sessions')
+@Controller('/sessions')
 export class AuthenticateController{
 
   constructor(

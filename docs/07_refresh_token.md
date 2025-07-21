@@ -1,41 +1,13 @@
-// 
-PAYLOAD {
-  sub,
-  name,
-  iat ( é quando o token foi criado )
-}
+//
+Para gerar o refresh token
 
+- na funcao de implementacao, nesse caso JwtEncrypter, precisa ter as funções
+   - generateToken() -- vai gerar o acess_token e o refresh_token
+   - verify() -- vai usar o jwtService para verificar o token
+   - decode() -- return this.jwtService.decode(token) as Record<string, unknown> | null;
 
-em app .ts inserir linhas
-```
-  	app.register(fastifyJwt, {
-      scret : env.JWT_SECRET,
-      sign: {
-        expiresIn : '10m'
-      }
-    })
-```
-
-Acessar controller que cria o token, alem da criacao do tken, cria o refresh token também
-- Data de expiração 7 dias do refresh token
-```
-const sign : {
-  sub : user.id,
-  expiresIn : '7d'
-}
-```
-
-// Refresh token envia através de um cookie
-// Cookie evita que o refresh_token seja acessado por dentro do front ou usuário final
-```
-  setCookie('refreshToken, refreshToken), {
-    path : '/', ( quais rotas da aplicação vao ter acesso a esse cookie , / é igual a todas)
-    secure : true, ( significa que vai ser encryptado atraves do https),
-    sameSite : true, ( cookie somente acessivel dentro do mesmo dominio ),
-    httpOnly : true ( somente salvo atraves do backend, o front nao pode ver)
-  }
-```
-## Passo a passo em NEST
-Gerando Refresh Token com NestJS
-Primeiramente, no arquivo auth.service.ts atualize o método gerarToken() para gerar o refresh token, neste caso alteramos o tempo de expiração e a secret key para aumentar a segurança:
-![alt text](image-1.png)
+-  no endpoint de refresh token
+   - verificar se o jwt é valido
+   - se for valido pega o payload que vai ter o sub ( sub vai ser o user.id )
+  - com o sub, buscar usuario com o repositorio de usuarios
+  - aps verificar que usuario existe, criar tokens com generateToken() e retornar o acess e refresh

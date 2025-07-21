@@ -1,13 +1,12 @@
 import { makeLeft, makeRight, type Either } from "../../../core/either/either";
 import { Injectable } from "@nestjs/common";
-import { EmailAlreadyExistsError } from "../../../core/errors/email-already-exists-error";
 import type { UsersRepository } from "../repositories/users-repository";
-import type { HashGenerator } from "../cryptograph/hash-generator";
-import { User } from "../../enterprise/entities/user";
 import { WrongCredentialsError } from "../../../core/errors/wrong-credentials-error";
-import type { HashComparer } from "../cryptograph/hash-comparer";
 import type { Encrypter } from "../cryptograph/encrypter";
 
+interface TokenPayload {
+  sub: string
+}
 
 interface RefreshTokenUseCaseRequest {
   refreshToken : string
@@ -29,19 +28,19 @@ export class RefreshTokenUseCase{
     private encrypter : Encrypter
   ) {}
   
-  async handle({refreshToken}: RefreshTokenUseCaseRequest) : Promise<RefreshTokenUseCaseResponse> {
+  async execute({refreshToken}: RefreshTokenUseCaseRequest) : Promise<RefreshTokenUseCaseResponse> {
     const isValid = await this.encrypter.verify(refreshToken);
 
     if (!isValid) {
       return makeLeft(new WrongCredentialsError())
     }
 
-    const payload = this.encrypter.decode(refreshToken)
+    const payload = this.encrypter.decode<TokenPayload>(refreshToken);
 
-    const sub = payload?.sub
-
-    if(!sub) {
-      return makeLeft(new WrongCredentialsError())
+    const sub = payload?.sub;
+    
+    if (!sub) {
+      return makeLeft(new WrongCredentialsError());
     }
 
     const user = this.usersRepository.findUserById(sub)
