@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import type { Encrypter } from "../../domain/application/cryptograph/encrypter";
 import { JwtService } from "@nestjs/jwt";
+import { randomUUID } from "node:crypto";
 
 @Injectable()
 export class JwtEncrypter implements Encrypter{
@@ -17,7 +18,8 @@ export class JwtEncrypter implements Encrypter{
 
     const refresh_token = await this.jwtService.sign(payload,
       {
-        expiresIn : "10d"
+        expiresIn : "10d",
+        jwtid: randomUUID(),
       }
     )
     

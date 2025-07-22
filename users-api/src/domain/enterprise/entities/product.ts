@@ -11,11 +11,11 @@ interface ProductProps {
 }
 
 export class Product extends Entity<ProductProps> {
-  public static create(props: Optional<ProductProps, 'createdAt' | 'updatedAt'>, id?: string) {
+  public static create(props: Optional<ProductProps, 'createdAt' | 'updatedAt'>, id?: UniqueEntityID) {
     const product = new Product({
       ...props,
       createdAt: props.createdAt ?? new Date(),
-    }, new UniqueEntityID(id));
+    }, id);
 
     return product;
   }

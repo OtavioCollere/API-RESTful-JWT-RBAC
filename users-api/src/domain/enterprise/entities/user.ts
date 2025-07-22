@@ -2,7 +2,7 @@ import { Entity } from "../../../core/entities/entity";
 import { UniqueEntityID } from "../../../core/entities/unique-entity-id";
 import { Optional } from "../../../core/types/optional";
 
-interface UserProps{
+export interface UserProps{
   name : string
   email : string,
   password : string
@@ -12,12 +12,12 @@ interface UserProps{
 
 export class User extends Entity<UserProps>{
 
-  public static create(props : Optional<UserProps, 'createdAt' | 'updatedAt'> , id?: string) {
+  public static create(props : Optional<UserProps, 'createdAt' | 'updatedAt'> , id?: UniqueEntityID) {
 
     const user = new User({
       ...props,
       createdAt : props.createdAt ?? new Date()
-    }, new UniqueEntityID(id));
+    }, id);
 
     return user;
   }
