@@ -1,9 +1,9 @@
 import { makeLeft, makeRight, type Either } from "../../../../core/either/either";
 import { Injectable } from "@nestjs/common";
-import type { UsersRepository } from "../../repositories/users-repository";
+import { UsersRepository } from "../../repositories/users-repository";
 import { WrongCredentialsError } from "../../../../core/errors/wrong-credentials-error";
-import type { HashComparer } from "../../cryptograph/hash-comparer";
-import type { Encrypter } from "../../cryptograph/encrypter";
+import { HashComparer } from "../../cryptograph/hash-comparer";
+import { Encrypter } from "../../cryptograph/encrypter";
 
 
 interface AuthenticateUseCaseRequest {

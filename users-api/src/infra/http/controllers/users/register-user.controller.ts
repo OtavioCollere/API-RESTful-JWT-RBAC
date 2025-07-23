@@ -1,7 +1,7 @@
 import { Post, HttpCode, Body, Controller, UsePipes, ConflictException, BadRequestException } from '@nestjs/common';
 import z from "zod";
 import { ZodValidationPipe } from "../../pipes/zod-validation-pipe";
-import type { RegisterUserUseCase } from '../../../../domain/application/use-cases/users/register-user';
+import { RegisterUserUseCase } from '../../../../domain/application/use-cases/users/register-user';
 import { isLeft, unwrapEither } from '../../../../core/either/either';
 import { EmailAlreadyExistsError } from '../../../../core/errors/email-already-exists-error';
 

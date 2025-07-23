@@ -1,5 +1,5 @@
-import type { ProductsRepository } from "../../src/domain/application/repositories/products-repository";
-import type { Product } from "../../src/domain/enterprise/entities/product";
+import { ProductsRepository } from "../../src/domain/application/repositories/products-repository";
+import { Product } from "../../src/domain/enterprise/entities/product";
 
 export class InMemoryProductsRepository implements ProductsRepository {
   public items: Product[] = [];

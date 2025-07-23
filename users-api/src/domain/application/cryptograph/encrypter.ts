@@ -1,10 +1,9 @@
+import { Injectable } from "@nestjs/common";
 
 type TokenResponse = {
   access_token: string;
   refresh_token: string;
 };
-
-
 
 export abstract class Encrypter{
 

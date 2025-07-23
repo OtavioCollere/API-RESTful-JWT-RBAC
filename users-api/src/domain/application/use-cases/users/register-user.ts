@@ -1,8 +1,8 @@
 import { makeLeft, makeRight, type Either } from "../../../../core/either/either";
 import { Injectable } from "@nestjs/common";
 import { EmailAlreadyExistsError } from "../../../../core/errors/email-already-exists-error";
-import type { UsersRepository } from "../../repositories/users-repository";
-import type { HashGenerator } from "../../cryptograph/hash-generator";
+import { UsersRepository } from "../../repositories/users-repository";
+import { HashGenerator } from "../../cryptograph/hash-generator";
 import { User } from "../../../enterprise/entities/user";
 
 

@@ -1,7 +1,7 @@
 import { BadRequestException, Body, Controller, HttpCode, Post, UnauthorizedException, UsePipes } from "@nestjs/common";
 import { ZodValidationPipe } from "../../pipes/zod-validation-pipe";
 import z from "zod";
-import type { RefreshTokenUseCase } from "../../../../domain/application/use-cases/users/refresh-token";
+import { RefreshTokenUseCase } from "../../../../domain/application/use-cases/users/refresh-token";
 import { isLeft, unwrapEither } from "../../../../core/either/either";
 import { WrongCredentialsError } from "../../../../core/errors/wrong-credentials-error";
 

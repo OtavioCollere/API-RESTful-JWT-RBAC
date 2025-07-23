@@ -1,4 +1,4 @@
-import type { Encrypter } from "../../src/domain/application/cryptograph/encrypter";
+import { Encrypter } from "../../src/domain/application/cryptograph/encrypter";
 
 export class FakeEncrypter implements Encrypter{
 

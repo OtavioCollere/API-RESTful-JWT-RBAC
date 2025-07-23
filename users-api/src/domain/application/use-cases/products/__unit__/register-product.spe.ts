@@ -1,6 +1,6 @@
 import { beforeEach } from 'node:test'
 import { describe, expect, it } from 'vitest'
-import { RegisterProductUseCase } from './products/register-product'
+import { RegisterProductUseCase } from '../register-product'
 import { InMemoryProductsRepository } from '../../../../../../tests/repositories/in-memory-products-repository'
 import { isRight, unwrapEither } from '../../../../../core/either/either'
 
