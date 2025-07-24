@@ -3,8 +3,6 @@ import { UniqueEntityID } from "../../../core/entities/unique-entity-id";
 import { Optional } from "../../../core/types/optional";
 
 export interface UserProps{
-  createdBy : UniqueEntityID
-  editedBy? : UniqueEntityID
   name : string
   email : string,
   password : string

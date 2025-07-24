@@ -4,6 +4,11 @@ import { Product } from "../../src/domain/enterprise/entities/product";
 export class InMemoryProductsRepository implements ProductsRepository {
   public items: Product[] = [];
 
+  async findBySlug(slug: string): Promise<Product | null> {
+    const product = this.items.find(item => item.slug === slug);
+    return product ?? null;
+  }
+
   async findById(id: string): Promise<Product | null> {
     const product = this.items.find((item) => item.id.toString() === id);
 

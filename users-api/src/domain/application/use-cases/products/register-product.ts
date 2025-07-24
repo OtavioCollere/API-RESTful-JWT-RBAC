@@ -5,6 +5,7 @@ import { ProductsRepository } from "../../repositories/products-repository";
 import type { UsersRepository } from "../../repositories/users-repository";
 import { UserNotFoundError } from "@/core/errors/user-not-found-error";
 import { ProductAlreadyExistsError } from "@/core/errors/product-already-exists-error";
+import { UniqueEntityID } from "@/core/entities/unique-entity-id";
 
 interface RegisterProductUseCaseRequest {
   userId : string
@@ -30,9 +31,11 @@ export class RegisterProductUseCase{
 
   async execute({userId ,name, price, quantity} : RegisterProductUseCaseRequest) : Promise<RegisterProductUseCaseResponse> {
 
-    const productExists = await this.productsRepository.findBySlug() 
+    const slug = Product.slugify(name);
 
-    if (!productExists) {
+    const productExists = await this.productsRepository.findBySlug(slug) 
+
+    if (productExists) {
       return makeLeft(new ProductAlreadyExistsError)
     }
 
@@ -43,7 +46,10 @@ export class RegisterProductUseCase{
     }
 
     const product = Product.create({
-      name, price, quantity
+      name, 
+      price, 
+      quantity, 
+      createdBy : new UniqueEntityID(userId)
     })
 
     await this.productsRepository.create(product)
