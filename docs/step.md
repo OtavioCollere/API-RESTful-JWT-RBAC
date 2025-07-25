@@ -46,3 +46,15 @@
 // Criar controller e testes e2e de tokens
 
 // documentar
+
+[] - testes unitarios products
+
+[] - controllers products
+
+[] - controllers users
+
+[] - banco isolado
+
+[] - testes e2e
+
+[] - documentacoes

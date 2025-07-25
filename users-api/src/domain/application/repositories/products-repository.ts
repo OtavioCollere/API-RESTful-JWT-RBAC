@@ -6,4 +6,5 @@ export abstract class ProductsRepository{
   abstract delete(product : Product) : Promise<void>  
   abstract getAll(query : string, page : number) : Promise<Product[]>
   abstract findBySlug(slug : string) : Promise<Product | null>
+  abstract save(product : Product) : Promise<Product>
 }

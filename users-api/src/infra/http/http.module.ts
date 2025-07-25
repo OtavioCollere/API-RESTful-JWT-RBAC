@@ -7,6 +7,9 @@ import { AuthenticateController } from "./controllers/users/authenticate.control
 import { RefreshTokenUseCase } from "../../domain/application/use-cases/users/refresh-token";
 import { AuthenticateUseCase } from "../../domain/application/use-cases/users/authenticate";
 import { RegisterUserUseCase } from "../../domain/application/use-cases/users/register-user";
+import { RegisterProductUseCase } from "@/domain/application/use-cases/products/register-product";
+import { EditProductUseCase } from "@/domain/application/use-cases/products/edit-product";
+import { DeleteProductUseCase } from "@/domain/application/use-cases/products/delete-product";
 
 
 @Module({
@@ -17,11 +20,17 @@ import { RegisterUserUseCase } from "../../domain/application/use-cases/users/re
     RefreshTokenController,
     AuthenticateController,
     RegisterUserController,
+
+    
   ],
   providers : [
     RefreshTokenUseCase,
     AuthenticateUseCase,
-    RegisterUserUseCase
+    RegisterUserUseCase,
+
+    RegisterProductUseCase,
+    EditProductUseCase,
+    DeleteProductUseCase
   ]
 })
 export class HttpModule{}

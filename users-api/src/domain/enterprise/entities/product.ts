@@ -56,17 +56,17 @@ export class Product extends Entity<ProductProps> {
   }
 
   // Setters
-  setName(value: string): void {
+  set name(value: string)  {
     this.props.name = value;
     this.touch();
   }
 
-  setPrice(value: number): void {
+  set price(value: number) {
     this.props.price = value;
     this.touch();
   }
 
-  setQuantity(value: number): void {
+  set quantity(value: number) {
     this.props.quantity = value;
     this.touch();
   }
